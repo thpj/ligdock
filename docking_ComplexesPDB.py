@@ -95,57 +95,213 @@ for h in range(1,64):
                     # The following set of conditions renames that atom types of the ligand only, such as C to C1, by each instance it appears.
                     # It also renumbers the integer to be consistent with the number of residues. The second string insertion while writing the line
                     # will need to be changed according to the protein under study. Current implementation only renumbers atom types of C, N, O, H
-                    # F, S, Cl, and Br.
+                    # F, S, P, Cl, and Br. Also, changes residue name to 'LIG' if it was originally 'UNK' or '<1>'.
                     # If the following hard conditions are not met, then the line is just written as is.
                     for line in fin1:
                         if line[17:20]=='LIG' and line [13:14] == 'C':
                             q = q + 1
                             if q < 10:
                                 fout1.write(line[0:13] + 'C%d' % q + line[15:23] + '314 ' + line[27:80])
-                            elif q >= 10:
+                            elif q < 100:
                                 fout1.write(line[0:13] + 'C%d' % q + line[16:23] + '314 ' + line[27:80])
+                            elif q >=100:
+                                fout1.write(line[0:12] + 'C%d' % q + line[16:23] + '314 ' + line[27:80])
                         elif line[17:20]=='LIG' and line [13:14] == 'N':
                             r = r + 1
                             if r < 10:
                                 fout1.write(line[0:13] + 'N%d' % r + line[15:23] + '314 ' + line[27:80])
-                            elif r >= 10:
+                            elif r < 100:
                                 fout1.write(line[0:13] + 'N%d' % r + line[16:23] + '314 ' + line[27:80])
+                            elif r >= 100:
+                                fout1.write(line[0:12] + 'N%d' % r + line[16:23] + '314 ' + line[27:80])
                         elif line[17:20]=='LIG' and line [13:14] == 'O':
                             s = s + 1
                             if s < 10:
                                 fout1.write(line[0:13] + 'O%d' % s + line[15:23] + '314 ' + line[27:80])
-                            elif s >= 10:
+                            elif s < 100:
                                 fout1.write(line[0:13] + 'O%d' % s + line[16:23] + '314 ' + line[27:80])
+                            elif s >=100:
+                                fout1.write(line[0:12] + 'O%d' % s + line[16:23] + '314 ' + line[27:80])
                         elif line[17:20]=='LIG' and line [13:14] == 'H':
                             t = t + 1
                             if t < 10:
                                 fout1.write(line[0:13] + 'H%d' % t + line[15:23] + '314 ' + line[27:80])
-                            elif t >= 10:
+                            elif t < 100:
                                 fout1.write(line[0:13] + 'H%d' % t + line[16:23] + '314 ' + line[27:80])
+                            elif t >= 100:
+                                fout1.write(line[0:12] + 'H%d' % t + line[16:23] + '314 ' + line[27:80])
                         elif line[17:20]=='LIG' and line [13:14] == 'F':
-                             u = u + 1
-                             if u < 10:
+                            u = u + 1
+                            if u < 10:
                                 fout1.write(line[0:13] + 'F%d' % u + line[15:23] + '314 ' + line[27:80])
-                             elif u >= 10:
+                            elif u < 100:
                                 fout1.write(line[0:13] + 'F%d' % u + line[16:23] + '314 ' + line[27:80])
+                            elif u >= 100:
+                                fout1.write(line[0:12] + 'F%d' % u + line[16:23] + '314 ' + line[27:80])
                         elif line[17:20]=='LIG' and line [13:14] == 'S':
-                             v = v + 1
-                             if v < 10:
+                            v = v + 1
+                            if v < 10:
                                 fout1.write(line[0:13] + 'S%d' % v + line[15:23] + '314 ' + line[27:80])
-                             elif v >= 10:
+                            elif v < 100:
                                 fout1.write(line[0:13] + 'S%d' % v + line[16:23] + '314 ' + line[27:80])
-                        elif line[17:20]=='LIG' and line [13:15] == 'BR': 
-                              w = w + 1
-                              if w < 10:
-                                fout1.write(line[0:13] + 'BR%d' % w + line[16:23] + '314 ' + line[27:80])
-                              elif w >= 10:
-                                fout1.write(line[0:13] + 'BR%d' % w + line[16:23] + '314' + line[27:80])
-                        elif line[17:20]=='LIG' and line [13:15] == 'CL':
-                              x = x + 1
-                              if x < 10:
-                                fout1.write(line[0:13] + 'CL%d' % x + line[16:23] + '314 ' + line[27:80])
-                              elif x >= 10:
-                                fout1.write(line[0:13] + 'CL%d' % x + line[16:23] + '314' + line[27:80])  
+                            elif v >= 100:
+                                fout1.write(line[0:12] + 'S%d' % v + line[16:23] + '314 ' + line[27:80])
+                        elif line[17:20]=='LIG' and line [12:14] == 'BR': 
+                            w = w + 1
+                            if w < 10:
+                                fout1.write(line[0:12] + 'BR%d' % w + line[16:23] + '314 ' + line[27:80])
+                            elif w >= 10:
+                                fout1.write(line[0:12] + 'BR%d' % w + line[16:23] + '314' + line[27:80])
+                        elif line[17:20]=='LIG' and line [12:14] == 'CL':
+                            x = x + 1
+                            if x < 10:
+                                fout1.write(line[0:12] + 'CL%d' % x + line[16:23] + '314 ' + line[27:80])
+                            elif x >= 10:
+                                fout1.write(line[0:12] + 'CL%d' % x + line[16:23] + '314' + line[27:80])
+                        elif line[17:20]=='LIG' and line [13:14] == 'P':
+                            a = a + 1
+                            if a < 10:
+                                fout1.write(line[0:13] + 'P%d' % a + line[15:23] + '314 ' + line[27:80])
+                            elif a < 100:
+                                fout1.write(line[0:13] + 'P%d' % a + line[16:23] + '314 ' + line[27:80])
+                            elif a >= 100:
+                                fout1.write(line[0:12] + 'P%d' % a + line[16:23] + '314 ' + line[27:80])
+                        elif line[17:20]=='UNK' and line [13:14] == 'C':
+                            q = q + 1
+                            if q < 10:
+                                fout1.write(line[0:13] + 'C%d' % q + line[15:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif q < 100:
+                                fout1.write(line[0:13] + 'C%d' % q + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif q >= 100:
+                                fout1.write(line[0:12] + 'C%d' % q + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                        elif line[17:20]=='UNK' and line [13:14] == 'N':
+                            r = r + 1
+                            if r < 10:
+                                fout1.write(line[0:13] + 'N%d' % r + line[15:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif r < 100:
+                                fout1.write(line[0:13] + 'N%d' % r + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif r >= 100:
+                                fout1.write(line[0:12] + 'N%d' % r + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                        elif line[17:20]=='UNK' and line [13:14] == 'O':
+                            s = s + 1
+                            if s < 10:
+                                fout1.write(line[0:13] + 'O%d' % s + line[15:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif s < 100:
+                                fout1.write(line[0:13] + 'O%d' % s + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif s >= 100:
+                                fout1.write(line[0:12] + 'O%d' % s + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                        elif line[17:20]=='UNK' and line [13:14] == 'H':
+                            t = t + 1
+                            if t < 10:
+                                fout1.write(line[0:13] + 'H%d' % t + line[15:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif t < 100:
+                                fout1.write(line[0:13] + 'H%d' % t + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif t >= 100:
+                                fout1.write(line[0:12] + 'H%d' % t + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                        elif line[17:20]=='UNK' and line [13:14] == 'F':
+                            u = u + 1
+                            if u < 10:
+                                fout1.write(line[0:13] + 'F%d' % u + line[15:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif u < 100:
+                                fout1.write(line[0:13] + 'F%d' % u + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif u >= 100:
+                                fout1.write(line[0:12] + 'F%d' % u + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                        elif line[17:20]=='UNK' and line [13:14] == 'S':
+                            v = v + 1
+                            if v < 10:
+                                fout1.write(line[0:13] + 'S%d' % v + line[15:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif v < 100:
+                                fout1.write(line[0:13] + 'S%d' % v + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif v >= 100:
+                                fout1.write(line[0:12] + 'S%d' % v + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                        elif line[17:20]=='UNK' and line [12:14] == 'BR': 
+                            w = w + 1
+                            if w < 10:
+                                fout1.write(line[0:12] + 'BR%d' % w + line[15:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif w >= 10:
+                                fout1.write(line[0:12] + 'BR%d' % w + line[16:17] + 'LIG' + line[20:23] + '314' + line[27:80])
+                        elif line[17:20]=='UNK' and line [12:14] == 'CL':
+                            x = x + 1
+                            if x < 10:
+                                fout1.write(line[0:12] + 'CL%d' % x + line[15:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif x >= 10:
+                                fout1.write(line[0:12] + 'CL%d' % x + line[16:17] + 'LIG' + line[20:23] + '314' + line[27:80])
+                        elif line[17:20]=='UNK' and line [13:14] == 'P':
+                            a = a + 1
+                            if a < 10:
+                                fout1.write(line[0:13] + 'P%d' % a + line[15:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif a < 100:
+                                fout1.write(line[0:13] + 'P%d' % a + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif a >= 100:
+                                fout1.write(line[0:12] + 'P%d' % a + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                        elif line[17:20]=='<1>' and line [13:14] == 'C':
+                            q = q + 1
+                            if q < 10:
+                                fout1.write(line[0:13] + 'C%d' % q + line[15:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif q < 100:
+                                fout1.write(line[0:13] + 'C%d' % q + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif q >= 100:
+                                fout1.write(line[0:12] + 'C%d' % q + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                        elif line[17:20]=='<1>' and line [13:14] == 'N':
+                            r = r + 1
+                            if r < 10:
+                                fout1.write(line[0:13] + 'N%d' % r + line[15:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif r < 100:
+                                fout1.write(line[0:13] + 'N%d' % r + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif r >= 100:
+                                fout1.write(line[0:12] + 'N%d' % r + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                        elif line[17:20]=='<1>' and line [13:14] == 'O':
+                            s = s + 1
+                            if s < 10:
+                                fout1.write(line[0:13] + 'O%d' % s + line[15:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif s < 100:
+                                fout1.write(line[0:13] + 'O%d' % s + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif s >= 100:
+                                fout1.write(line[0:12] + 'O%d' % s + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                        elif line[17:20]=='<1>' and line [13:14] == 'H':
+                            t = t + 1
+                            if t < 10:
+                                fout1.write(line[0:13] + 'H%d' % t + line[15:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif t >= 10:
+                                fout1.write(line[0:13] + 'H%d' % t + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif t >=100:
+                                fout1.write(line[0:12] + 'H%d' % t + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                        elif line[17:20]=='<1>' and line [13:14] == 'F':
+                            u = u + 1
+                            if u < 10:
+                                fout1.write(line[0:13] + 'F%d' % u + line[15:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif u < 100:
+                                fout1.write(line[0:13] + 'F%d' % u + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif u >= 100:
+                                fout1.write(line[0:12] + 'F%d' % u + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                        elif line[17:20]=='<1>' and line [13:14] == 'S':
+                            v = v + 1
+                            if v < 10:
+                                fout1.write(line[0:13] + 'S%d' % v + line[15:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif v < 100:
+                                fout1.write(line[0:13] + 'S%d' % v + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif v >= 100:
+                                fout1.write(line[0:12] + 'S%d' % v + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                        elif line[17:20]=='<1>' and line [12:14] == 'BR': 
+                            w = w + 1
+                            if w < 10:
+                                fout1.write(line[0:12] + 'BR%d' % w + line[15:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif w >= 10:
+                                fout1.write(line[0:12] + 'BR%d' % w + line[16:17] + 'LIG' + line[20:23] + '314' + line[27:80])
+                        elif line[17:20]=='<1>' and line [12:14] == 'CL':
+                            x = x + 1
+                            if x < 10:
+                                fout1.write(line[0:12] + 'CL%d' % x + line[15:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif x >= 10:
+                                fout1.write(line[0:12] + 'CL%d' % x + line[16:17] + 'LIG' + line[20:23] + '314' + line[27:80])
+                        elif line[17:20]=='<1>' and line [13:14] == 'P':
+                            a = a + 1
+                            if a < 10:
+                                fout1.write(line[0:13] + 'P%d' % a + line[15:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif a < 100:
+                                fout1.write(line[0:13] + 'P%d' % a + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])
+                            elif a >= 100:
+                                fout1.write(line[0:12] + 'P%d' % a + line[16:17] + 'LIG' + line[20:23] + '314 ' + line[27:80])  
                         else:
                             fout1.write(line)
                 fin1.close()
