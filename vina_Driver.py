@@ -12,6 +12,8 @@ k = 0
 m = 0
 n = 0 
 p = 0
+q = 0
+z = 0
 
 #This loop takes the name of the file and makes it into a directory based on its basename.
 # After the directory is created, the file corresponding to the directory name is moved into the corresponding directory.
@@ -22,6 +24,25 @@ for file_path in glob.glob(os.path.join(folder, '*.*')):
     i = i + 1
     print "Created directory number: ", i #Note that i does not correspond to the directory name, simply how many directories have been created.
 print 'Done creating directories for docking, based on ligand name'
+
+#set q to the highest numbered pdbqt filename you had originally.
+#This next step renumbers the just created directory with the original ligand number, and renumbers
+#to make the directories sequential and easier to work with.
+for q in range(5600):
+    if os.path.exists('/PATH/TO/YOUR//JUST/CREATED/DIRECTORY/%d/%d.pdbqt' % (q, q)):
+        # z will be used to renumber your directory
+        z = z +1
+        #rename your just created directory from previous loop to be sequential with next step
+        os.rename('/PATH/TO/YOUR/JUST/CREATED/DIRECTORY/%d' % q, '/PATH/TO/RENAMED/DIRECTORY/RenamedDirectory_%d' % z)
+        print 'New directory name is RenamedDirectory_%d' % z
+        os.chdir('/PATH/TO/YOUR/RENAMED/DIRECTORY/Z_%d' % z)
+        #We now create a link back to the original pdb and call it ligand.pdbqt.
+        os.symlink('%d.pdbqt' % q, 'ligand.pdbqt')
+        os.chdir('../')
+    else:
+        print 'Directory does not exist', q
+        continue
+print 'Done creating ligand links'
 
 #set j to total number of directories created
 for j in range(90):
